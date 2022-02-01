@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import * as mapboxgl from 'mapbox-gl';
 import { Map } from 'mapbox-gl';
 import { environment } from 'src/environments/environment';
-import { Station, Position } from '../shared/station';
+import { Station } from '../shared/station';
 import { WeatherService } from '../shared/weather.service';
 
 const lat = 46.4892313;
@@ -18,6 +18,8 @@ const maxZoom = 12;
   styleUrls: ['./map.component.scss']
 })
 export class MapComponent implements OnInit {
+
+  public currentStation: Station | undefined;
 
   public map!: Map;
   private markers: mapboxgl.Marker[] = [];
@@ -55,28 +57,21 @@ export class MapComponent implements OnInit {
 
   private addStationsToMap(stations: Station[]){
     stations.forEach(station => {
+
+      const popup = new mapboxgl.Popup();
+      popup.on("open", () => {
+        this.currentStation = station;
+      });
+
       const marker = new mapboxgl.Marker({
         color: "#F00",
       })
       .setLngLat(station.position.toLngLatLike())
-      .setPopup(new mapboxgl.Popup().setHTML("<h1>" + station.id + " | " + station.name + "</h1>"));
+      .setPopup(popup);
 
       marker.addTo(this.map);
       this.markers.push(marker);
     });
-  }
-
-  private randomPosition(): Position{
-    let ret: Position = new Position(0, 0);
-
-    ret.latitude = this.randomNumberBetween(46.983155152961736, 46.19563031598852);
-    ret.longitude = this.randomNumberBetween(12.37097000960092, 10.407948265318456);
-
-    return ret;
-  }
-
-  private randomNumberBetween(max: number, min: number): number{
-    return Math.random() * (max - min) + min;
   }
 
 }

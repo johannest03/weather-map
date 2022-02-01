@@ -1,10 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-<<<<<<< HEAD
 import { FlexLayoutModule } from '@angular/flex-layout';
 
-=======
->>>>>>> d007415ba942706b78bd2598203ceeef698075c0
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -31,7 +28,6 @@ import { MatCardModule } from '@angular/material/card';
     AppRoutingModule,
     BrowserAnimationsModule,
     FlexLayoutModule,
-
     MatTabsModule,
     MatCardModule,
     HttpClientModule

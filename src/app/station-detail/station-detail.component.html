@@ -1,4 +1,4 @@
-<mat-card>
+<mat-card *ngIf="station">
     <mat-card-header fxLayout="column">
         <h2>{{ station?.name }}</h2>
         <p>{{station?.code}}</p>

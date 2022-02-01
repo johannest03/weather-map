@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Measurement, Station } from '../shared/station';
 
 @Component({
@@ -8,7 +8,7 @@ import { Measurement, Station } from '../shared/station';
 })
 export class StationDetailComponent implements OnInit {
 
-  station!:Station;
+  @Input() station!: Station | undefined;
 
   constructor() { }
 
