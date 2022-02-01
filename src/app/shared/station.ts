@@ -29,7 +29,7 @@ export interface Station {
   measurements: Measurement[];
 }
 
-interface Measurement {
+export interface Measurement {
   code: string;
   description: string;
   imageUrl: string;
