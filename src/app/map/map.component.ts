@@ -3,6 +3,7 @@ import * as mapboxgl from 'mapbox-gl';
 import { Map } from 'mapbox-gl';
 import { environment } from 'src/environments/environment';
 import { Station, Position } from '../shared/station';
+import { WeatherService } from '../shared/weather.service';
 
 const lat = 46.4892313;
 const lng = 11.3121383;
@@ -22,7 +23,9 @@ export class MapComponent implements OnInit {
   private markers: mapboxgl.Marker[] = [];
   public style = 'mapbox://styles/mapbox/light-v10?optimize=true';
 
-  constructor() { }
+  constructor(
+    private _ws: WeatherService
+  ) { }
 
   ngOnInit(): void {
     this.map = new Map({
@@ -38,19 +41,10 @@ export class MapComponent implements OnInit {
 
     this.map.addControl(new mapboxgl.NavigationControl());
 
-    let stations: Station[] = [];
-
-    for(let i = 0; i < 100; i++){
-      const station = new Station();
-      station.id = "898123";
-      station.name = "x";
-      station.position = this.randomPosition();
-
-      stations.push(station);
-    }
-
-    this.clearMarkers();
-    this.addStationsToMap(stations);
+    this._ws.getStations().subscribe(stations => {
+      this.clearMarkers();
+      this.addStationsToMap(stations);
+    });
   }
 
   private clearMarkers(){
