@@ -16,6 +16,7 @@ import { StationDetailComponent } from './station-detail/station-detail.componen
 
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { MatCardModule } from '@angular/material/card';
     FlexLayoutModule,
     MatTabsModule,
     MatCardModule,
-    HttpClientModule
+    HttpClientModule,
+    MatIconModule,
   ],
   providers: [
     WeatherService

@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { Measurement, Station } from '../shared/station';
 
@@ -15,7 +16,16 @@ export class StationDetailComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  getDiagram(type:string) {
-    this.station?.measurements?.find(measurment => measurment.code== type)
+  getDiagram(type:string): string | undefined{
+    return this.station?.measurements?.find(measurment => measurment.code== type)?.imageUrl;
+  }
+  getDate(): Date | undefined {
+    let date = this.station?.lastUpdated;
+    if(date)
+      return new Date(date);
+    return undefined
+  }
+  close(){
+    
   }
 }

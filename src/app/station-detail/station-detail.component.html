@@ -1,28 +1,30 @@
 <mat-card *ngIf="station">
     <mat-card-header fxLayout="column">
         <h2>{{ station?.name }}</h2>
-        <p>{{station?.code}}</p>
+        <p>{{ station?.code }}</p>
+        <p class="date">Last updated: {{ getDate() |  date:'dd/MM/yyyy HH:mm'}}</p>
+        <mat-icon (click)="close()">close</mat-icon>
     </mat-card-header>
     <mat-card-content>
         <mat-tab-group mat-align-tabs="start">
             <mat-tab label="Temperatur">
-                <h3>Lufttemperatur: {{station?.t}} C°</h3>
-                <h3>Wassertemperatur: {{station?.w}} C°</h3>
+                <h3>Lufttemperatur: {{ station?.t }} C°</h3>
+                <h3>Wassertemperatur: {{ station?.w }} C°</h3>
                 <mat-card-content>
                     <img [src]="getDiagram('t')">
                 </mat-card-content>
             </mat-tab>
             <mat-tab label="Wind">
-                <h3>Windrichtung: {{station?.dd}}</h3>
-                <h3>Mittlere Windgeschwindigkeit: {{station?.ff}} km/h</h3>
+                <h3>Windrichtung: {{ station?.dd }}</h3>
+                <h3>Mittlere Windgeschwindigkeit: {{ station?.ff }} km/h</h3>
                 <mat-card-content>
                     <img [src]="getDiagram('dd')">
                 </mat-card-content>
 
             </mat-tab>
             <mat-tab label="Niederschlag">
-                <h3>Niederschlagssumme seit Mitternacht: {{station?.n}} mm</h3>
-                <h3>Relative Luftfeuchtigkeit: {{station?.rh}}%</h3>
+                <h3>Niederschlagssumme seit Mitternacht: {{ station?.n }} mm</h3>
+                <h3>Relative Luftfeuchtigkeit: {{ station?.rh }}%</h3>
                 <mat-card-content>
                     <img [src]="getDiagram('n')">
                 </mat-card-content>
