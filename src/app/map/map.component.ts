@@ -114,5 +114,7 @@ export class MapComponent implements OnInit {
       this.markers.push({ station, marker });
     });
   }
-
+  closeStation(){
+    this.currentStation = undefined;
+  }
 }

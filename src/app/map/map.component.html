@@ -1,5 +1,5 @@
 <div class="container">  
-    <app-station-detail [station]="currentStation"></app-station-detail>
+    <app-station-detail [station]="currentStation" (closeStation) = "closeStation()"></app-station-detail>
     <div class="map" id="map">
     </div>
 </div>

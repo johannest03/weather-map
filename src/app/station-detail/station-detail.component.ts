@@ -1,6 +1,5 @@
-import { DatePipe } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
-import { Measurement, Station } from '../shared/station';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Station } from '../shared/station';
 
 @Component({
   selector: 'app-station-detail',
@@ -10,6 +9,7 @@ import { Measurement, Station } from '../shared/station';
 export class StationDetailComponent implements OnInit {
 
   @Input() station!: Station | undefined;
+  @Output('closeStation') closeStation: EventEmitter<undefined> = new EventEmitter<undefined>();
 
   constructor() { }
 
@@ -26,6 +26,6 @@ export class StationDetailComponent implements OnInit {
     return undefined
   }
   close(){
-    this.station = undefined;
+    this.closeStation.emit();
   }
 }
