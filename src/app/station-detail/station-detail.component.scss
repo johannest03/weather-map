@@ -1,6 +1,17 @@
 mat-card{
     box-sizing: border-box;
-
     width: 100%;
     height: 100%;
+}
+.date{
+    font-size: 0.8em;
+    font-style: italic;
+}
+.close{
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    &:hover{
+        cursor: pointer;
+    }
 }
