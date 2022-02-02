@@ -26,6 +26,6 @@ export class StationDetailComponent implements OnInit {
     return undefined
   }
   close(){
-    
+    this.station = undefined;
   }
 }
