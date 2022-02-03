@@ -11,14 +11,14 @@
                 <h3>Lufttemperatur: {{ station?.t }} C°</h3>
                 <h3>Wassertemperatur: {{ station?.w }} C°</h3>
                 <mat-card-content>
-                    <img [src]="getDiagram('t')">
+                    <img [src]="getDiagram('LT')">
                 </mat-card-content>
             </mat-tab>
             <mat-tab label="Wind">
                 <h3>Windrichtung: {{ station?.dd }}</h3>
                 <h3>Mittlere Windgeschwindigkeit: {{ station?.ff }} km/h</h3>
                 <mat-card-content>
-                    <img [src]="getDiagram('dd')">
+                    <img [src]="getDiagram('WG')">
                 </mat-card-content>
 
             </mat-tab>
@@ -26,7 +26,7 @@
                 <h3>Niederschlagssumme seit Mitternacht: {{ station?.n }} mm</h3>
                 <h3>Relative Luftfeuchtigkeit: {{ station?.rh }}%</h3>
                 <mat-card-content>
-                    <img [src]="getDiagram('n')">
+                    <img [src]="getDiagram('LF')">
                 </mat-card-content>
 
             </mat-tab>

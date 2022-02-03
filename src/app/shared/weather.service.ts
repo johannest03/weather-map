@@ -65,9 +65,19 @@ export class WeatherService {
     station.name = stationData.name;
     station.position.longitude = stationData.longitude;
     station.position.latitude = stationData.latitude;
-
     station.lastUpdated = stationData.lastUpdated;
-
+    station.altitude = stationData.altitude;
+    station.dd = stationData.dd;
+    station.ff = stationData.ff;
+    station.hs = stationData.hs;
+    station.n = stationData.n;
+    station.p = stationData.p
+    station.q = stationData.q;
+    station.rh = stationData.rh;
+    station.t = stationData.t;
+    station.w = stationData.w;
+    station.sd = stationData.sd;
+    station.measurements = stationData.measurements;
 
     return station;
   }
