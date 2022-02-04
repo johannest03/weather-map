@@ -31,6 +31,7 @@ interface StationMarker{
 export class MapComponent implements OnInit {
 
   private _currentStation: Station | undefined;
+  private _stations: Station[] | undefined;
 
   public map!: Map;
   private markers: StationMarker[] = [];
@@ -55,9 +56,28 @@ export class MapComponent implements OnInit {
     this.map.addControl(new mapboxgl.NavigationControl());
 
     this._ws.getStations().subscribe(stations => {
+      this._stations = stations;
       this.clearMarkers();
       this.addStationsToMap(stations);
     });
+  }
+
+  handleSelectedStation(station: Station){
+    this.currentStation = station;
+    const marker = this.markers.find(marker => marker.station == station);
+    if(marker == null) return;
+    this.map.flyTo({
+      center: [ marker.marker.getLngLat().lng, marker.marker.getLngLat().lat ],
+      speed: 0.00025,
+      curve: 0,
+      easing: (t) => Math.sin(t * Math.PI / 2),
+      essential: true,
+      bearing: 0,
+    });
+  }
+
+  get stations(): Station[] | undefined{
+    return this._stations;
   }
 
   get currentStation(): Station | undefined{

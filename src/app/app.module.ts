@@ -12,17 +12,22 @@ import { WeatherService } from './shared/weather.service';
 import { AppComponent } from './app.component';
 import { MapComponent } from './map/map.component';
 import { StationDetailComponent } from './station-detail/station-detail.component';
+import { SearchComponent } from './search/search.component';
 
 
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 @NgModule({
   declarations: [
     AppComponent,
     MapComponent,
-    StationDetailComponent
+    StationDetailComponent,
+    SearchComponent
   ],
   imports: [
     BrowserModule,
@@ -33,6 +38,9 @@ import { MatIconModule } from '@angular/material/icon';
     MatCardModule,
     HttpClientModule,
     MatIconModule,
+    MatAutocompleteModule,
+    MatInputModule,
+    MatFormFieldModule,
   ],
   providers: [
     WeatherService

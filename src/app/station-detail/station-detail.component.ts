@@ -17,7 +17,6 @@ export class StationDetailComponent implements OnInit {
   }
 
   getDiagram(type:string): string | undefined{
-    console.log(this.station?.measurements);
     return this.station?.measurements?.find(measurment => measurment.code== type)?.imageUrl;
   }
   getDate(): Date | undefined {

@@ -17,3 +17,9 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .mapboxgl-ctrl-attrib-button{ display: none; }
 
 .mapboxgl-marker:hover{ cursor: pointer; }
+
+@media screen and (max-width: 500px) {
+    .mapboxgl-ctrl{
+        display: none;
+    }
+}

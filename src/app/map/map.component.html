@@ -1,5 +1,6 @@
 <div class="container">  
-    <app-station-detail [station]="currentStation" (closeStation) = "closeStation()"></app-station-detail>
+    <app-search *ngIf="stations" [stations]="stations" (station)="handleSelectedStation($event)"></app-search>
+    <app-station-detail *ngIf="!(currentStation == null)" (closeStation) = "closeStation()" [station]="currentStation"></app-station-detail>
     <div class="map" id="map">
     </div>
 </div>
