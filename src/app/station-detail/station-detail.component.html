@@ -11,21 +11,21 @@
                 <h3>Lufttemperatur: {{ station?.t }} C°</h3>
                 <h3>Wassertemperatur: {{ station?.w }} C°</h3>
                     <div class="image">
-                        <img [src]="getDiagram('LT')">
+                        <img (click)="openDialog(getDiagram('LT'))" [src]="getDiagram('LT')">
                     </div>
             </mat-tab>
             <mat-tab label="Wind">
                 <h3>Windrichtung: {{ station?.dd }}</h3>
                 <h3>Mittlere Windgeschwindigkeit: {{ station?.ff }} km/h</h3>
                 <div class="image">
-                    <img [src]="getDiagram('WG')">
+                    <img (click)="openDialog(getDiagram('WG'))" [src]="getDiagram('WG')">
                 </div>
             </mat-tab>
             <mat-tab label="Niederschlag">
                 <h3>Niederschlagssumme seit Mitternacht: {{ station?.n }} mm</h3>
                 <h3>Relative Luftfeuchtigkeit: {{ station?.rh }}%</h3>
                 <div class="image">
-                    <img [src]="getDiagram('LF')">
+                    <img (click)="openDialog(getDiagram('LF'))" [src]="getDiagram('LF')">
                 </div>
 
             </mat-tab>
