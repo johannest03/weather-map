@@ -97,13 +97,15 @@ export class MapComponent implements OnInit {
   }
 
   set currentStation(station: Station | undefined){
+    if(station === this._currentStation) return;
+
     let oldMarker = this.markers.find(marker => marker.station === this._currentStation);
     let marker = this.markers.find(marker => marker.station === station);
 
     this._currentStation = station;
 
-    if(marker) this.switchColorAndScale(marker, colorHighlight, scaleHighlight);
     if(oldMarker) this.switchColorAndScale(oldMarker, colorNormal, scaleNormal);
+    if(marker) this.switchColorAndScale(marker, colorHighlight, scaleHighlight);
 
     if(station != null) {
       this._location.go("station/" + station?.code);
