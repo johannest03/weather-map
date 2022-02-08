@@ -26,7 +26,10 @@ export class SearchComponent{
   }
 
   get stations(): Station[]{
-    return this._stations.filter(station => station.name.toLowerCase().includes(this.searchTerm.toLowerCase()));
+    return this._stations
+      .filter(station => station.name.toLowerCase().includes(this.searchTerm.toLowerCase()))
+      .sort((a, b) => a.name.localeCompare(b.name))
+      .sort((a, b) => a.name.indexOf(this.searchTerm) > b.name.indexOf(this.searchTerm) ? 1 : 0);
   }
 
 }
