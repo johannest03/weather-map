@@ -44,14 +44,12 @@ interface MeasurementData {
 })
 export class WeatherService {
 
-  private stations!: Station[];
-
   constructor(
     private _httpClient: HttpClient
   ){}
 
   getStations(): Observable<Station[]>{
-    return this._httpClient.get<any>(API_URL + "Realtime?language=en")
+    return this._httpClient.get<any>(API_URL + "Realtime?language=de")
       .pipe(
         map((rawStations) => rawStations.map((stationData: StationData) => this.stationDataToStation(stationData)))
       );

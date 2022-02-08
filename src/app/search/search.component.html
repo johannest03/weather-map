@@ -1,5 +1,5 @@
 
-<input type="text" class="search" #searchTerm  placeholder="Search station..." (keydown)="handleKeyDownEvent(searchTerm.value)"  matInput [matAutocomplete]="auto">
+<input type="text" class="search" #searchTerm  placeholder="Suche Station..." (keydown)="handleKeyDownEvent(searchTerm.value)"  matInput [matAutocomplete]="auto">
 <mat-autocomplete #auto="matAutocomplete" (optionSelected)="handleSelected($event.option.value)">
   <mat-option *ngFor="let option of stations" [value]="option.name">
     {{option.name}}

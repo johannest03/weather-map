@@ -2,7 +2,7 @@
     <mat-card-header fxLayout="column">
         <h2>{{ station?.name }}</h2>
         <p>{{ station?.code }}</p>
-        <p class="date">Last updated: {{ getDate() |  date:'dd/MM/yyyy HH:mm'}}</p>
+        <p class="date">Zuletzt aktualisiert: {{ getDate() |  date:'dd/MM/yyyy HH:mm'}}</p>
         <mat-icon class="close" (click)="close()">close</mat-icon>
     </mat-card-header>
     <mat-card-content>
