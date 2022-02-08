@@ -1,4 +1,6 @@
+import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import * as mapboxgl from 'mapbox-gl';
 import { Map } from 'mapbox-gl';
 import { environment } from 'src/environments/environment';
@@ -38,7 +40,9 @@ export class MapComponent implements OnInit {
   public style = 'mapbox://styles/mapbox/light-v10?optimize=true';
 
   constructor(
-    private _ws: WeatherService
+    private _ws: WeatherService,
+    private _route: ActivatedRoute,
+    private _location: Location
   ) { }
 
   ngOnInit(): void {
@@ -59,7 +63,15 @@ export class MapComponent implements OnInit {
       this._stations = stations;
       this.clearMarkers();
       this.addStationsToMap(stations);
+      
+      this.loadCurrentStation();
     });
+  }
+
+  private loadCurrentStation(){
+    const code = this._route.snapshot.params.code;
+    const station = this._stations?.find(s => s.code == code);
+    if(station) this.currentStation = station;
   }
 
   handleSelectedStation(station: Station){
@@ -92,6 +104,8 @@ export class MapComponent implements OnInit {
 
     if(marker) this.switchColorAndScale(marker, colorHighlight, scaleHighlight);
     if(oldMarker) this.switchColorAndScale(oldMarker, colorNormal, scaleNormal);
+
+    this._location.go("station/" + station?.code);
   }
 
   private switchColorAndScale(marker: StationMarker, color: string, scale: number){
