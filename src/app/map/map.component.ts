@@ -105,7 +105,11 @@ export class MapComponent implements OnInit {
     if(marker) this.switchColorAndScale(marker, colorHighlight, scaleHighlight);
     if(oldMarker) this.switchColorAndScale(oldMarker, colorNormal, scaleNormal);
 
-    this._location.go("station/" + station?.code);
+    if(station != null) {
+      this._location.go("station/" + station?.code);
+    }else{
+      this._location.go("");
+    }
   }
 
   private switchColorAndScale(marker: StationMarker, color: string, scale: number){
