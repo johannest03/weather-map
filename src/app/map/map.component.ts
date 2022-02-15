@@ -1,11 +1,9 @@
-import { Location } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import * as mapboxgl from 'mapbox-gl';
 import { Map } from 'mapbox-gl';
 import { environment } from 'src/environments/environment';
 import { Station } from '../shared/station';
-import { WeatherService } from '../shared/weather.service';
+import { StationMarker, StationMarkerData } from '../shared/station_marker';
 
 const lat = 46.4892313;
 const lng = 11.3121383;
@@ -20,11 +18,6 @@ const colorHighlight = "#85C1E9";
 const scaleNormal = 1;
 const scaleHighlight = 1.25;
 
-interface StationMarker{
-  station: Station,
-  marker: mapboxgl.Marker
-}
-
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
@@ -32,18 +25,19 @@ interface StationMarker{
 })
 export class MapComponent implements OnInit {
 
-  private _currentStation: Station | undefined;
-  private _stations: Station[] | undefined;
+  @Output("clickMarker") public clickMarkerEmit: EventEmitter<Station> = new EventEmitter<Station>();
+
+  @Input("markers") public set markers(markers: StationMarkerData[]){
+    this.clearMarkers();
+    
+    this._markers = this.loadDataToMakers(markers);
+  }
+  private _markers: StationMarker[] = [];
 
   public map!: Map;
-  private markers: StationMarker[] = [];
   public style = 'mapbox://styles/mapbox/light-v10?optimize=true';
 
-  constructor(
-    private _ws: WeatherService,
-    private _route: ActivatedRoute,
-    private _location: Location
-  ) { }
+  constructor() {}
 
   ngOnInit(): void {
     this.map = new Map({
@@ -58,103 +52,34 @@ export class MapComponent implements OnInit {
     });
 
     this.map.addControl(new mapboxgl.NavigationControl());
-
-    this._ws.getStations().subscribe(stations => {
-      this._stations = stations;
-      this.clearMarkers();
-      this.addStationsToMap(stations);
-      
-      this.loadCurrentStation();
-    });
-  }
-
-  private loadCurrentStation(){
-    const code = this._route.snapshot.params.code;
-    const station = this._stations?.find(s => s.code == code);
-    if(station) this.currentStation = station;
-  }
-
-  handleSelectedStation(station: Station){
-    this.currentStation = station;
-    const marker = this.markers.find(marker => marker.station == station);
-    if(marker == null) return;
-    this.map.flyTo({
-      center: [ marker.marker.getLngLat().lng, marker.marker.getLngLat().lat ],
-      speed: 0.00025,
-      curve: 0,
-      easing: (t) => Math.sin(t * Math.PI / 2),
-      essential: true,
-      bearing: 0,
-    });
-  }
-
-  get stations(): Station[] | undefined{
-    return this._stations;
-  }
-
-  get currentStation(): Station | undefined{
-    return this._currentStation;
-  }
-
-  set currentStation(station: Station | undefined){
-    if(station === this._currentStation) return;
-
-    let oldMarker = this.markers.find(marker => marker.station === this._currentStation);
-    let marker = this.markers.find(marker => marker.station === station);
-
-    this._currentStation = station;
-
-    if(oldMarker) this.switchColorAndScale(oldMarker, colorNormal, scaleNormal);
-    if(marker) this.switchColorAndScale(marker, colorHighlight, scaleHighlight);
-
-    if(station != null) {
-      this._location.go("station/" + station?.code);
-    }else{
-      this._location.go("");
-    }
-  }
-
-  private switchColorAndScale(marker: StationMarker, color: string, scale: number){
-    const popup = marker.marker.getPopup();
-    const location = marker.marker.getLngLat();
-
-    marker.marker.remove();
-    marker.marker = new mapboxgl.Marker({
-      color,
-      scale: scale,
-    })
-    .setLngLat(location)
-    .setPopup(popup);
-
-    marker.marker.addTo(this.map);
   }
 
   private clearMarkers(){
-    this.markers.forEach(marker => {
+    this._markers.forEach(marker => {
       marker.marker.remove()
     });
-    this.markers = [];
+    this._markers = [];
   }
 
-  private addStationsToMap(stations: Station[]){
-    stations.forEach(station => {
+  private loadDataToMakers(stationsData: StationMarkerData[]): StationMarker[]{
+    let ret: StationMarker[] = [];
 
+    stationsData.forEach(data => {
       const popup = new mapboxgl.Popup();
       popup.on("open", () => {
-        this.currentStation = station;
+        this.clickMarkerEmit.emit(data.station);
       });
 
       const marker = new mapboxgl.Marker({
-        color: colorNormal,
+        color: data.highlighted ? colorHighlight : colorNormal,
+        scale: data.highlighted ? scaleHighlight : scaleNormal
       })
-      .setLngLat(station.position.toLngLatLike())
+      .setLngLat(data.station.position.toLngLatLike())
       .setPopup(popup);
 
       marker.addTo(this.map);
-      this.markers.push({ station, marker });
+      ret.push({ station: data.station, marker: marker, highlighted: data.highlighted });
     });
-  }
-  closeStation(){
-    this.currentStation = undefined;
+    return ret;
   }
 }

@@ -1,10 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { MapComponent } from './map/map.component';
+import { MainComponent } from './main/main.component';
 
 const routes: Routes = [
-  { path: '', component: MapComponent },
-  { path: 'station/:code', component: MapComponent }
+  { path: '', component: MainComponent },
+  { path: 'station/:code', component: MainComponent },
+  { path: '**', pathMatch: 'full', redirectTo: ""},
 ];
 
 @NgModule({

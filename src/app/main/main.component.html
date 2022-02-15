@@ -1,0 +1,7 @@
+<div class="container">
+    <div class="sidebar">
+        <app-search *ngIf="stations" [stations]="stations" (station)="handleSelectStation($event)" ></app-search>
+        <app-station-detail *ngIf="!(current_station == null)" [station]="current_station" (closeStation)="handleCloseDetail()"></app-station-detail>
+    </div>
+    <app-map [markers]="getMarkers()" (clickMarker)="handleClickMarker($event)"></app-map>
+</div>

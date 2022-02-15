@@ -1,0 +1,47 @@
+.container{
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.sidebar{
+    z-index: 2;
+
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    height: calc(100% - 20px);
+
+    max-width: 500px;
+    min-width: 300px;
+    width: 30%;
+
+    app-search, app-station-detail{
+        width: calc(100% - 20px);
+    }
+}
+
+app-search{
+    z-index: 2;
+    box-sizing: border-box;
+
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
+
+app-station-detail{
+    z-index: 2;
+    box-sizing: border-box;
+
+    position: absolute;
+    top: 70px;
+    left: 10px;
+    height: calc(100% - 80px);
+}
+
+@media screen and (max-width: 500px) {
+    .sidebar{
+        width: calc(100% - 20px);
+    }
+}
