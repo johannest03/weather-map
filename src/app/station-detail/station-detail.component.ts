@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { fromEvent } from 'rxjs';
 import { Station } from '../shared/station';
 
 @Component({
@@ -9,12 +10,18 @@ import { Station } from '../shared/station';
 })
 export class StationDetailComponent implements OnInit {
 
+  private _showDialog: boolean = true;
+
   @Input() station!: Station | undefined;
   @Output('closeStation') closeStation: EventEmitter<undefined> = new EventEmitter<undefined>();
 
   constructor(public dialog: MatDialog) { }
 
   ngOnInit(): void {
+    this._showDialog = window.outerWidth > 500;
+    fromEvent(window, 'resize').subscribe( (evt: any) => {
+      this._showDialog = evt?.target?.outerWidth > 500; 
+    })
   }
 
   getDiagram(type:string): string | undefined{
@@ -30,6 +37,7 @@ export class StationDetailComponent implements OnInit {
     this.closeStation.emit();
   }
   openDialog(img:string | undefined){
+    if(!this._showDialog) return;
     const dialog = this.dialog.open(DiagramDialog, {
       data: img
     });
